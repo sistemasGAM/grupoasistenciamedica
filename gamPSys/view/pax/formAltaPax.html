@@ -1,13 +1,16 @@
-<div class="jumbotron">
+<div class="jumbotron" style="margin-left: 30px; margin-right: 30px;">
   <center>
+    <br>
     <h1 class="display-4">Formulario!</h1>
     <p class="lead">Agregar Usuario</p>
   </center>
   <hr class="my-4" />
-  <div class="container">
+  <div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8 col-12">
     <form class="row">
-      <div class="col-md-6">
-        <label class="form-label">Apellido Paterno</label>
+      <div class="col-md-6 col-12">
+        <label class="form-label font-weight-bold">Apellido Paterno</label>
         <input
           type="name"
           class="form-control"
@@ -15,8 +18,9 @@
           required
         />
       </div>
-      <div class="col-md-6">
-        <label class="form-label">Apellido Materno</label>
+
+      <div class="col-md-6 col-12">
+        <label class="form-label font-weight-bold">Apellido Materno</label>
         <input
           type="text"
           class="form-control"
@@ -24,19 +28,24 @@
           required
         />
       </div>
-      <center>
-        <div class="col-md-6">
-          <label class="form-label">Nombre Completo</label>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Digite su Nombre Completo"
-            required
-          />
-        </div>
-      </center>
+      <div class="col-12">
+        <br />
+      </div>
+      <div class="col-12">
+        <label class="form-label font-weight-bold">Nombre Completo</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Digite su Nombre Completo"
+          required
+        />
+      </div>
+      <div class="col-12">
+        <br />
+      </div>
+
       <div class="col-md-6">
-        <label class="form-label">Correo Electronico</label>
+        <label class="form-label font-weight-bold">Correo Electronico</label>
         <input
           type="email"
           class="form-control"
@@ -45,7 +54,7 @@
         />
       </div>
       <div class="col-md-6">
-        <label class="form-label">Contraseña</label>
+        <label class="form-label font-weight-bold">Contraseña</label>
         <input
           type="password"
           class="form-control"
@@ -56,8 +65,11 @@
         <input type="checkbox" onclick="Toggle()" />
         <b>Ver Contraseña</b>
       </div>
+      <div class="col-12">
+        <br />
+      </div>
       <div class="col-md-12">
-        <label class="form-label">Dirección</label>
+        <label class="form-label font-weight-bold">Dirección</label>
         <textarea
           type="text"
           class="form-control"
@@ -65,12 +77,15 @@
           required
         ></textarea>
       </div>
-      <div class="col-md-6">
-        <label class="form-label">Fotografia</label>
+      <div class="col-12">
+        <br />
+      </div>
+      <div class="col-md-8">
+        <label class="form-label font-weight-bold">Fotografia</label>
         <input type="file" class="form-control" />
       </div>
-      <div class="col-md-6">
-        <label class="form-label">Genero</label>
+      <div class="col-md-4">
+        <label class="form-label font-weight-bold">Genero</label>
         <br />
         <div class="form-check form-check-inline">
           <input
@@ -96,8 +111,13 @@
           <br />
           <button class="btn btn-primary btn-lg">Enviar</button>
         </div>
+        <br>
       </center>
     </form>
+  </div>
+  <div class="col-md-2"></div>
+</div>
+</div>
   </div>
 </div>
 <script src="https://grupoasistenciamedica.com/gamPSys/view/pax/js/formAlta.js"></script>

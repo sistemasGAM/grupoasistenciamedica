@@ -1,0 +1,117 @@
+<div class="container">
+  <div
+    class="jumbotron jumbotron-fluid"
+    style="margin-left: 30px; margin-right: 30px"
+  >
+    <div class="container">
+      <br />
+      <br />
+      <h1 class="display-3">Buscar nomina</h1>
+
+      <hr class="my-2" />
+      <div class="card">
+        <img class="card-img-top" src="holder.js/100x180/" alt="" />
+        <div class="card-body">
+          <h4 class="card-title">No. Nomina</h4>
+          <br />
+          <div class="col-12">
+            <div class="form-group">
+              <input
+                type="number"
+                onkeyup="search()"
+                class="form-control"
+                name=""
+                id="noPax"
+                aria-describedby="helpId"
+                placeholder="Numero de nomina"
+              />
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <br />
+      <div class="col-12">
+        <div class="res"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modals -->
+<div class="modal fade bd-example-modal-lg" id="docs" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg"" role=" document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Herramientas</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+
+              <div class="buttonsPax"></div>
+          </div>
+
+      </div>
+  </div>
+</div>
+<script>
+  function search() {
+      var dats = $("#noPax").val()
+      var stringNecio = String(dats);
+    $.ajax({
+      type: "get",
+      url: "controller/adminController/searchPax.php",
+      data: {
+        id: stringNecio,
+      },
+      dataType: "html",
+      success: function (data) {
+        $(".res").html(data);
+      },
+      error: function (data) {
+        alert("Problemas al tratar de enviar el formulario");
+      },
+    });
+  }
+  function openModalTools(ids){
+    $('#docs').modal('show');
+   console.log(ids);
+   var id = ids;
+    $.ajax({
+      type: "get",
+      url: "controller/adminController/buttonsPax.php",
+      data: {
+        id: ids,
+      },
+      dataType: "html",
+      success: function (data) {
+        $(".buttonsPax").html(data);
+        
+      },
+      error: function (data) {
+        alert("Problemas al tratar de enviar el formulario");
+      },
+    });
+  }
+  function closeModal(){
+    $('#docs').modal('hide');
+  }
+  function NewAutReg(id){
+    $.ajax({
+      type: "get",
+      url: "controller/adminController/newAutRegCon.php",
+      data: {
+        id: id,
+      },
+      dataType: "html",
+      success: function (data) {
+        $(".buttonsPax").html(data);
+      }
+    });
+
+  }
+  
+</script>
+

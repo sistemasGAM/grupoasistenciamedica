@@ -1,28 +1,66 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.8.0/sweetalert2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.8.0/sweetalert2.min.js"></script>
 <?php
 
-if(!empty($_POST)){
-	if(isset($_POST["username"]) && isset($_POST["password"])){
-		if($_POST["username"]!=""&&$_POST["password"]!=""){
-			include "conection.php";
-			
-			$user_id=null; 
-			$sql1= "select * from pruebaUser where (username=\"$_POST[username]\" or email=\"$_POST[username]\") and password=\"$_POST[password]\" ";
-			$query = $con->query($sql1);
-			while ($r=$query->fetch_array()) {
-				$user_id=$r["id"];
-				break;
-			}
-			if($user_id==null){
-				print "<script>alert(\"Acceso invalido.\");window.location='view/template/index.html';</script>";
-			}else{
-				session_start();
-				$_SESSION["user_id"]=$user_id;
-				print "<script>window.location='view/template/index.html;</script>";				
-			}
-		}
-	}
+if (!empty($_POST)) {
+
+    $user = (isset($_POST['user']) ? $_POST['user'] : null);
+    $email = (isset($_POST['email']) ? $_POST['email'] : null);
+    $passOne = (isset($_POST['passOne']) ? $_POST['passOne'] : null);
+    $passTwo = (isset($_POST['passTwo']) ? $_POST['passTwo'] : null);
+    $nomina = (isset($_POST['nomina']) ? $_POST['nomina'] : null);
+
+    require_once('../../model/validate.php');
+
+
+    if (isset($user) && isset($email) && isset($passOne) && isset($passTwo) && isset($nomina)) {
+        if ($user != "" && $email != "" && $passOne != "" && $passTwo != "" && $nomina != "") {
+            $object = new validate;
+            $object->validateLogin($data = [
+                "user" => $user,
+                "email" => $email,
+                "passOne" => $passOne,
+                "passTwo" => $passTwo,
+                "nomina" => $nomina
+            ]);
+        } else {
+?>            
+            <script LANGUAGE="javascript">
+                    $(document).ready(function() {   
+                   swal({
+                     title: 'Lo Sentimos!',
+                     text: "Variables Vacias!",
+                     type: 'error',
+                     confirmButtonColor: '#3085d6',
+                     confirmButtonText: 'OK!'
+                   }).then((result) => {
+                     if (result.value) {
+                       window.location.href = "";
+                     }
+                   })   
+                 });
+            </script>
+        <?php
+        }
+    } else {
+?>
+
+        <script LANGUAGE="javascript">
+            $(document).ready(function() {   
+            swal({
+                title: 'Lo Sentimos!',
+                text: "Variables Nulas!",
+                type: 'error',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK!'
+            }).then((result) => {
+                if (result.value) {
+                window.location.href = "";
+                }
+            })   
+            });
+        </script>
+<?php
+    }
 }
 
-
-
-?>
