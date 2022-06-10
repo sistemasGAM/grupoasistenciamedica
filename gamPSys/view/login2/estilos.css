@@ -1,0 +1,113 @@
+
+.container{
+    min-height:100vh;
+    background-color:#e9f0e6;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.card{
+    height:550px;
+    width:260px;
+    border-radius:30px;
+    background: url("https://grupoasistenciamedica.com/gamPSys/img/backgblue.jpg"); 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    padding:20px;
+    font-family: 'Poppins', sans-serif;
+}
+.top-row{
+    color:#fff;
+}
+.top-row p{
+    padding-bottom:20px;
+}
+.card-details{
+    position:relative;
+    display:flex;
+    
+    padding-bottom:20px;
+}
+.card-details input{
+    height:42px;
+    width:260px;
+    font-size:18px;
+    caret-color:rgb(29, 5, 252);
+    background-color:#fafafb;
+    color:#002052;
+    padding:0px 20px;
+    padding-left:50px;
+    box-sizing:border-box;
+    border-radius:20px;
+    outline:none;
+    border:none;
+}
+.card-details i{
+    position:absolute;
+    left:10px;
+    top:11px;
+    color:#76c7be;
+    font-size:18px;
+}
+.card-details span{
+    position:absolute;
+    width:20px;
+    height:20px;
+    background-color:#76c7be;
+    border-radius:50%;
+    color:#76c7be;
+    font-size:10px;
+    color:#000;
+    right:10px;
+    top:10px;
+    opacity: 0.8;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    cursor:pointer;
+}
+
+.card-details span:hover{
+    opacity:1;
+}
+.forget{
+    color:#fff;
+    margin-bottom:13px;
+}
+.sign-in{
+   display:flex;
+   justify-content:center;
+   align-items:center;
+   height:40px;
+   width:180px;
+    font-size:17px;
+    color:#f5f3f1;
+    border-radius:20px;
+    background-color:#76c7be;
+    font-weight:600;
+    cursor:pointer;
+    transition:all 0.5s;
+    border:none;
+}
+.sign-in:hover{
+    background-color:#67685f;
+    
+}
+.sign-up{
+    margin-top:30px;
+    color:rgb(250, 248, 248);
+}
+.sign-up a{
+    color:#fff;
+    text-decoration:none;
+    transition:all 0.5s;
+}
+.sign-up a:hover{
+    color:#a8c6f4;
+}
+
+.warning{
+    border:2px solid #76c7be !important;
+}

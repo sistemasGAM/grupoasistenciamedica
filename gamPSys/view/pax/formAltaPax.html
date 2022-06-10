@@ -1,0 +1,103 @@
+<div class="jumbotron">
+  <center>
+    <h1 class="display-4">Formulario!</h1>
+    <p class="lead">Agregar Usuario</p>
+  </center>
+  <hr class="my-4" />
+  <div class="container">
+    <form class="row">
+      <div class="col-md-6">
+        <label class="form-label">Apellido Paterno</label>
+        <input
+          type="name"
+          class="form-control"
+          placeholder="Digite su Apellido Paterno"
+          required
+        />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Apellido Materno</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Digite su Apellido Materno"
+          required
+        />
+      </div>
+      <center>
+        <div class="col-md-6">
+          <label class="form-label">Nombre Completo</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Digite su Nombre Completo"
+            required
+          />
+        </div>
+      </center>
+      <div class="col-md-6">
+        <label class="form-label">Correo Electronico</label>
+        <input
+          type="email"
+          class="form-control"
+          placeholder="Digite su Correo Electronico"
+          required
+        />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Contraseña</label>
+        <input
+          type="password"
+          class="form-control"
+          id="typepass"
+          placeholder="Digite su Contraseña"
+          required
+        />
+        <input type="checkbox" onclick="Toggle()" />
+        <b>Ver Contraseña</b>
+      </div>
+      <div class="col-md-12">
+        <label class="form-label">Dirección</label>
+        <textarea
+          type="text"
+          class="form-control"
+          placeholder="Digite su Dirección"
+          required
+        ></textarea>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Fotografia</label>
+        <input type="file" class="form-control" />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Genero</label>
+        <br />
+        <div class="form-check form-check-inline">
+          <input
+            type="radio"
+            class="form-check-input"
+            name="rdo"
+            checked
+            required
+          />
+          <label class="form-check-label">Masculino</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" name="rdo" />
+          <label class="form-check-label">Femenino</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" name="rdo" />
+          <label class="form-check-label">Otro</label>
+        </div>
+      </div>
+      <center>
+        <div class="col-md-12">
+          <br />
+          <button class="btn btn-primary btn-lg">Enviar</button>
+        </div>
+      </center>
+    </form>
+  </div>
+</div>
+<script src="https://grupoasistenciamedica.com/gamPSys/view/pax/js/formAlta.js"></script>
