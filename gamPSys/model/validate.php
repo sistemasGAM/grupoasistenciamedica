@@ -80,12 +80,13 @@ class validate
     switch ($var) {
       case '':
         break;
-      case 'admin':
+      case 'operador':
       ?>
         <script>
           function redireccionarSe() {
-            window.location.replace("/ControlMedicoGam/gamPSys/adminHome/");
+            window.location.replace("/ControlMedicoGam/gamPSys/paxView/");
           }
+
           setTimeout("redireccionarSe()", 1);
         </script>
 <?php
@@ -96,4 +97,6 @@ class validate
         break;
     }
   }
+  public function sessopnsOpertor(){}
+
 }

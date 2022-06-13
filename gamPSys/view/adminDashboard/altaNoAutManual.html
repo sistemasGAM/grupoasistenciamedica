@@ -1,3 +1,29 @@
+<style>
+  .btnAut{
+    background-color: #1a9ce5;
+    border-color: #1a9ce5;
+  }
+  .btnEsp{
+    background-color: #001b85;
+    border-color: #001b85;
+    color: antiquewhite;
+  }
+  .btnHis{
+    background-color: #f6f3ff;
+    border-color: #f6f3ff;
+    color: #000;
+    
+  }
+  .btnHis:hover{
+    background-color: #dcdcdc;
+    border-color: #dcdcdc;
+    color: #000;
+    
+  }
+  /* .btnHis:active {
+    border-color: #1a9ce5;
+  } */
+</style>
 <div class="container">
   <div
     class="jumbotron jumbotron-fluid"
@@ -102,6 +128,54 @@
     $.ajax({
       type: "get",
       url: "controller/adminController/newAutRegCon.php",
+      data: {
+        id: id,
+      },
+      dataType: "html",
+      success: function (data) {
+        $(".buttonsPax").html(data);
+      }
+    });
+
+  }
+  function NewAutEspReg(id){
+    $.ajax({
+      type: "get",
+      url: "controller/adminController/newAutRegEspCon.php",
+      data: {
+        id: id,
+      },
+      dataType: "html",
+      success: function (data) {
+        $(".buttonsPax").html(data);
+      }
+    });
+
+  }
+  function AddAutEspForm(){
+    var nom = $("#nom").val()
+    var origen = $("#origen").val()
+    var especial = $("#especial").val()
+    var provedor = $("#provedor").val()
+    $.ajax({
+      type: "post",
+      url: "controller/adminController/newAutRegEspProcess.php",
+      data: {
+        nom: nom,
+        origen: origen,
+        especial: especial,
+        provedor: provedor,
+      },
+      dataType: "html",
+      success: function (data) {
+        $(".buttonsPax").html(data);
+      }
+    });
+  }
+  function historicTable(id){
+    $.ajax({
+      type: "get",
+      url: "controller/adminController/tablePaxHistoric.php",
       data: {
         id: id,
       },
