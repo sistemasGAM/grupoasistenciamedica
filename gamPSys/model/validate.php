@@ -1,4 +1,3 @@
-
 <?php
 class validate
 {
@@ -15,7 +14,6 @@ class validate
   public function bd()
   {
     return $newCon = $this->conn;
-    
   }
   public function validateLogin($data = [])
   {
@@ -24,11 +22,25 @@ class validate
     extract($data);
 
 
-    $query = "SELECT * FROM pruebaUser WHERE email = '$name'";
+    $query = "SELECT * FROM `usuarios` WHERE correo = '$name'";
     $sql = mysqli_query($newCon, $query);
     if ($f = mysqli_fetch_assoc($sql)) {
-      if ($pass == $f['password']) {
-        echo "Valido";
+      if ($pass == $f['contrasena']) {
+        session_start();
+        $_SESSION['id'] = $f[0];
+        $_SESSION['user'] = $f[9];
+        $_SESSION['correo'] = $f[4];
+        $_SESSION['rol69'] = $f['rol'];
+        ?>
+        <script>
+          function redireccionarSe() {
+            window.location.replace("/gamPSys/paxView");
+          }
+
+          setTimeout("redireccionarSe()", 1);
+        </script>
+      <?php
+        
       } else {
 ?>
         <!--<div class="alert alert-danger" role="alert">
@@ -84,12 +96,12 @@ class validate
       ?>
         <script>
           function redireccionarSe() {
-            window.location.replace("/ControlMedicoGam/gamPSys/paxView/");
+            window.location.replace("/gamPSys/paxView");
           }
 
           setTimeout("redireccionarSe()", 1);
         </script>
-<?php
+      <?php
         break;
 
       default:
@@ -97,6 +109,27 @@ class validate
         break;
     }
   }
-  public function sessopnsOpertor(){}
+  public function sessopnsOperator($var)
+  {
+    switch ($var) {
+      case '':
+      ?>
+        <script>
+          function redireccionarSe() {
+            window.location.replace("/gamPSys/");
+          }
 
+          setTimeout("redireccionarSe()", 1);
+        </script>
+      <?php
+        break;
+      case 'operador':
+     
+        break;
+
+      default:
+        # code...
+        break;
+    }
+  }
 }

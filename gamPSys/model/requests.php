@@ -166,7 +166,9 @@ class request
 
                         <div class="col-md-12 col-12">
                             <label class="form-label font-weight-bold">N&uacute;mero de Proveedor</label>
-                            <input type="text" class="form-control" name="numProv" placeholder="Digite el N&uacute;mero de Proveedor" required />
+                            <input type="text" class="form-control" id="inputProv" onkeyup="searchProv()" name="numProv" placeholder="Digite el N&uacute;mero de Proveedor" required />
+                            <br>
+                            <div class="resprov"></div>
                         </div>
 
                         <div class="col-12">
@@ -217,37 +219,32 @@ class request
         </div>
         </div>
         </div>
-        <?php
+    <?php
     }
     public function addNewAutProcess($numAut, $numProv, $nom)
     {
         $requestClass = new request;
-        $number = rand(1000000000,9999999999);
-        $sql = "SELECT * FROM `autGeneral` WHERE id = '$number'";
+
+
+
+
+        $sql2 = "SELECT MAX(id) AS id FROM autGeneral;";
+        $sql = "INSERT INTO `autGeneral` (`provedor`, `nomina`, `fecha`) VALUES ('$numProv', '$nom', current_timestamp());";
         $query = $requestClass->sqlEject($sql);
-        if ($f = mysqli_fetch_assoc($query)) {
-            $number = rand(1000000000,9999999999);
-            $sql = "INSERT INTO `autGeneral` (`id`,`provedor`, `nomina`, `fecha`) VALUES ('$number','$numProv', '$nom', current_timestamp());";
-            $query = $requestClass->sqlEject($sql);
-        ?>
-            <div class="alert alert-success" role="alert">
-                <strong>Registro Actualizado. <h3><?=$number?></h3></strong>
-            </div>
-        <?php
-        } else {
-            $number2 = rand(1000000000,9999999999);
-            $sql = "INSERT INTO `autGeneral` (`id`,`provedor`, `nomina`, `fecha`) VALUES ('$number2','$numProv', '$nom', current_timestamp());";
-            $query = $requestClass->sqlEject($sql);
-        ?>
-            <div class="alert alert-success" role="alert">
-            <strong>Registro Actualizado. <h3><?=$number2?></h3></strong>
-            </div>
-        <?php
+        $query2 = $requestClass->sqlEject($sql2);
+        while ($arreglo = mysqli_fetch_array($query2)) {
+            $number = $arreglo[0];
         }
+    ?>
+        <div class="alert alert-success" role="alert">
+            <strong>Registro Actualizado. <h3><?= $number ?></h3></strong>
+        </div>
+    <?php
+
     }
     public function newAutRegEspCon($id)
     {
-        ?>
+    ?>
 
         <div class="jumbotron" style="margin-left: 30px; margin-right: 30px;">
             <center>
@@ -267,16 +264,14 @@ class request
 
                         <div class="col-md-6 col-12">
                             <label class="form-label font-weight-bold">N&uacute;mero de Proveedor</label>
-                            <input type="text" name="provedor" id="provedor" class="form-control" placeholder="Digite el N&uacute;mero de Proveedor" required />
+                            <input type="text" name="provedor" onkeyup="searchProv()" id="inputProv" class="form-control" placeholder="Digite el N&uacute;mero de Proveedor" required />
                         </div>
 
                         <div class="col-12">
-                            <br />
+                            <div class="resprov"></div>
                         </div>
 
-                        <div class="col-12">
-                            <br />
-                        </div>
+
 
 
                         <center>
@@ -298,30 +293,30 @@ class request
     }
     public function addNewAutEspProcess($numAut, $numAutEsp, $numProv, $nom)
     {
-        $esp = rand(100,999);
+        $esp = rand(100, 999);
         $requestClass = new request;
-        $sqlAutEsp = "SELECT * FROM `autEspecial` WHERE noAutEspecial = '$esp'";
+        $sqlAutEsp = "SELECT * FROM `autEspecial` WHERE noAutEspecial = '$esp' AND nomina = '$nom'";
         $sqlAutOrg = "SELECT * FROM `autGeneral` WHERE id = '$numAut'";
         $queryOrg = $requestClass->sqlEject($sqlAutOrg);
         $queryEsp = $requestClass->sqlEject($sqlAutEsp);
 
         if ($f = mysqli_fetch_assoc($queryOrg)) {
             if ($f = mysqli_fetch_assoc($queryEsp)) {
-                $esp = rand(100,999);
+                $esp = rand(100, 999);
                 $sqlTrue = "INSERT INTO `autEspecial` (`noAutEspecial`, `noAutGral`, `proveedor`, `nomina`, `fecha`) VALUES ('$esp', '$numAut', '$numProv', '$nom', current_timestamp());";
                 $queryEsp = $requestClass->sqlEject($sqlTrue);
         ?>
                 <div class="alert alert-success" role="alert">
-                <strong>Registro Actualizado. <h3><?=$esp?></h3></strong>
+                    <strong>Registro Actualizado. <h3><?= $esp ?></h3></strong>
                 </div>
             <?php
             } else {
-                $esp = rand(100,999);
+
                 $sqlTrue = "INSERT INTO `autEspecial` (`noAutEspecial`, `noAutGral`, `proveedor`, `nomina`, `fecha`) VALUES ('$esp', '$numAut', '$numProv', '$nom', current_timestamp());";
                 $queryEsp = $requestClass->sqlEject($sqlTrue);
             ?>
                 <div class="alert alert-success" role="alert">
-                <strong>Registro Actualizado. <h3><?=$esp?></h3></strong>
+                    <strong>Registro Actualizado. <h3><?= $esp ?></h3></strong>
                 </div>
             <?php
             }
@@ -336,7 +331,8 @@ class request
     public function historicPxTable($id)
     {
         $requestClass = new request;
-        $sqlAutOrg = "SELECT * FROM `autGeneral` WHERE nomina = '$id'";
+
+        $sqlAutOrg = "SELECT A.id as id, A.provedor as provedor, A.nomina, A.fecha as fecha, P.NOMBRE_DEL_PROVEEDOR as NOMBRE_DEL_PROVEEDOR FROM autGeneral As A INNER JOIN proveedores as P On P.id = A.provedor Where A.nomina = '$id'";
         $sqlAutEsp = "SELECT * FROM `autEspecial` WHERE nomina = '$id'";
         $queryOrg = $requestClass->sqlEject($sqlAutOrg);
         $queryEsp = $requestClass->sqlEject($sqlAutEsp);
@@ -363,6 +359,7 @@ class request
                                 <thead class="table-dark ">
                                     <tr>
                                         <th>No. Autorizaci&oacute;n</th>
+                                        <th>Nombre Proveedor</th>
                                         <th>Fecha</th>
                                         <th>No. Proveedor</th>
                                     </tr>
@@ -373,6 +370,7 @@ class request
                                     ?>
                                         <tr>
                                             <td><?= $arreglo['id'] ?></td>
+                                            <td><?= $arreglo['NOMBRE_DEL_PROVEEDOR'] ?></td>
                                             <td><?= $arreglo['fecha'] ?></td>
                                             <td><?= $arreglo['provedor'] ?></td>
                                         </tr>
@@ -413,6 +411,180 @@ class request
                 </div>
             </div>
         </div>
+
+    <?php
+    }
+    public function viewListProver($data)
+    {
+        $requestClass = new request;
+        $sql = "SELECT * FROM `proveedores` WHERE id LIKE '%$data%';";
+        $queryOrg = $requestClass->sqlEject($sql);
+    ?>
+        <table class="table">
+            <tbody>
+                <?php
+                while ($arregloEsp = mysqli_fetch_array($queryOrg)) {
+                ?>
+
+
+                    <tr>
+
+                        <td scope="row">
+                            <center>
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-light" type="button" onclick="butonsend('<?= $arregloEsp['id'] ?>')">
+                                        <b><?= $arregloEsp['id'] ?></b> - <?= $arregloEsp['NOMBRE_DEL_PROVEEDOR'] ?>
+                                    </button>
+                                </div>
+
+
+                        </td>
+
+
+                    </tr>
+
+                <?php
+                }
+                ?>
+            </tbody>
+        </table>
+    <?php
+    }
+    public function viewProveDirectorio()
+    {
+        $requestClass = new request;
+        $sql = "SELECT * FROM `proveedores`";
+        $queryOrg = $requestClass->sqlEject($sql);
+    ?>
+        <select id="selectEspecialidad" class="form-select" onchange="getState()">
+            <option>Seleccione</option>
+            <?php
+            while ($arregloEsp = mysqli_fetch_array($queryOrg)) {
+            ?>
+                <option><?= $arregloEsp[1] ?></option>
+
+            <?php
+            }
+            ?>
+        </select>
+    <?php
+    }
+    public function selectEstate($data)
+    {
+        $requestClass = new request;
+        $sql = "SELECT * FROM `proveedores` WHERE ESPECIALIDAD = '$data'";
+        $queryOrg = $requestClass->sqlEject($sql);
+    ?>
+        <select id="selectEstate" class="form-select" onchange="getColony()">
+            <option>Seleccione</option>
+            <?php
+            while ($arregloEsp = mysqli_fetch_array($queryOrg)) {
+            ?>
+                <option><?= $arregloEsp[4] ?></option>
+
+            <?php
+            }
+            ?>
+        </select>
+    <?php
+    }
+    public function selectMun($data, $var)
+    {
+        $requestClass = new request;
+        $sql = "SELECT * FROM `proveedores` WHERE ESTADO = '$data' AND ESPECIALIDAD = '$var'";
+        $queryOrg = $requestClass->sqlEject($sql);
+    ?>
+        <select id="disabledSelect" class="form-select">
+            <option>Seleccione</option>
+            <?php
+            while ($arregloEsp = mysqli_fetch_array($queryOrg)) {
+            ?>
+                <option><?= $arregloEsp[5] ?></option>
+
+            <?php
+            }
+            ?>
+        </select>
+    <?php
+    }
+
+    public function selectEst($var1, $var2, $var3)
+    {
+        $requestClass = new request;
+        $sql = "SELECT * FROM `proveedores` WHERE ESTADO = '$var1' AND ESPECIALIDAD = '$var2' AND DELEGACION = '$var3'";
+        $queryOrg = $requestClass->sqlEject($sql);
+
+
+
+    ?>
+        <div class="modal-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Dirección</th>
+                            <th>Teléfono(s)</th>
+                            <th>Correo</th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        while ($arregloEsp = mysqli_fetch_array($queryOrg)) {
+                            $arreglocel = $arregloEsp['CELUAR'];
+                            $lat = $arregloEsp['lat'];
+                            $lng = $arregloEsp['lng'];
+                        ?>
+                            <tr>
+                                <td><?= $arregloEsp['NOMBRE_DEL_PROVEEDOR'] ?></td>
+                                <td><?= $arregloEsp['CALLE'] ?> <?= $arregloEsp['COLONIA'] ?>
+                                    <br>
+                                    <?= $arregloEsp['DELEGACION'] ?> CP. <?= $arregloEsp['CP'] ?>
+
+                                </td>
+                                <td><?= $arregloEsp['TELEFONO'] ?><br>
+                                    <?= $arregloEsp['TELEFONO2'] ?><br>
+                                    Cel. <?= $arregloEsp['CELUAR'] ?>
+                                    <br>
+
+                                </td>
+                                <td><?= $arregloEsp['CORREO'] ?></td>
+
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+            <hr>
+            <div id="map"></div>
+            <script>
+                function iniciarMap() {
+                    var coord = {
+                        lat: <?=$lat?>,
+                        lng: <?=$lng?>,
+                    };
+                    var map = new google.maps.Map(document.getElementById("map"), {
+                        zoom: 15,
+                        center: coord,
+                    });
+                    var marker = new google.maps.Marker({
+                        position: coord,
+                        map: map,
+                    });
+                }
+            </script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDp9rF3GqQxXxLY-JsPrguo4zlrYL16iWI&callback=iniciarMap"></script>
+
+
+        </div>
+        <div class="modal-footer">
+            <a href="tel:+52<?= $arreglocel ?>" class="btn btn-primary btncolor"><i class="fa-solid fa-phone"></i> Llamar ahora</a>
+        </div>
+
 
 <?php
     }

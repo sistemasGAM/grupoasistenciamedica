@@ -186,6 +186,41 @@
     });
 
   }
+  function searchProv() {
+    var dats = $('#inputProv').val();
+    $.ajax({
+      type: "get",
+      url: "controller/adminController/searchProv.php",
+      data: {
+        id: dats,
+      },
+      dataType: "html",
+      success: function (data) {
+        $(".resprov").html(data);
+      },
+      error: function (data) {
+        alert("Problemas al tratar de enviar el formulario");
+      },
+    });
+
+  }
+  function butonsend(val){
+    $("#inputProv").val(val);
+    $.ajax({
+      type: "get",
+      url: "controller/adminController/searchProv.php",
+      data: {
+        id: 'a',
+      },
+      dataType: "html",
+      success: function (data) {
+        $(".resprov").html(data);
+      },
+      error: function (data) {
+        alert("Problemas al tratar de enviar el formulario");
+      },
+    });
+  }
   
 </script>
 

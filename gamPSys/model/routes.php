@@ -8,18 +8,19 @@ class routes
         $uri = $_SERVER['REQUEST_URI']; /* Obtenemos la URL */
         $uriParts = explode('/', $uri); /* la dividimos  */
         $this->rpart = $uriParts[2]; /* Recpcionamos la division 2 */
-        session_start();
+        
     }
     public function route()
     {
         $sessions = new validate;
         $part = $this->rpart; /* Llamamos la url recepcionada */
-
+        $sessionRolUser = $_SESSION['rol69'];
 
         switch ($part) {
             case '':
-                $sessions->sessionsLogin($_SESSION['rol']);
+                $sessions->sessionsLogin($sessionRolUser);
                 $template = new Template("view/login.html", $data = []);
+               
                 echo $template;
                 break;
             case 'adminHome':
@@ -74,13 +75,20 @@ class routes
                 echo $template;
                 break;
                 case 'paxView':
+                    $sessions->sessopnsOperator($sessionRolUser);
                     $view = new Template("view/adminDashboard/altaNoAutManual.html", $data = []);
                     $template = new Template("view/template/index.html", $data = [
     
                         "content" => $view
                     ]);
+                    
                     echo $template;
+                    
                     break;
+                    case 'directorio':
+                        $template = new Template("view/directorio/directorio.html", $data = []);
+                        echo $template;
+                        break;
             default:
 
                 # code...
